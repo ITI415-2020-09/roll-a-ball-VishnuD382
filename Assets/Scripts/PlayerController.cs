@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.InputSystems;
+using UnityEngine.InputSystem;
 
 
 public class PlayerController : MonoBehaviour
 {
 
-    private RigidBody rb;
+    public float speed = 0;
+
+    private Rigidbody rb;
     private float movementX;
     private float movementY;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<RigidBody>();
+        rb = GetComponent<Rigidbody>();
     }
     
     void OnMove(InputValue movementValue)
     {
-        Vector2 movementVector = movementValue.get<Vector2>();
+        Vector2 movementVector = movementValue.Get<Vector2>();
 
         movementX = movementVector.x;
         movementY = movementVector.y;
@@ -30,6 +32,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
-        rb.AddForce(movement);
+        rb.AddForce(movement * speed);
     }
 }
